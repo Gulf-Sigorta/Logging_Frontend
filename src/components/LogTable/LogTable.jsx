@@ -6,21 +6,22 @@ const LogTable = ({ logs }) => {
     <table className={styles.logTable}>
       <thead>
         <tr>
-          <th>ID</th>
+          <th>Date</th>
           <th>Level</th>
-          <th>Message</th>
-          <th>Timestamp</th>
           <th>Source</th>
+          <th>Thread</th>
+          <th>Message</th> 
         </tr>
       </thead>
       <tbody>
         {logs.map(log => (
           <tr key={log.id} className={styles.row}>
-            <td>{log.id}</td>
-            <td className={styles[getLevelClass(log.level)]}>{log.level}</td>
-            <td>{log.message}</td>
             <td>{new Date(log.timestamp).toLocaleString()}</td>
+            <td className={styles[getLevelClass(log.level)]}>{log.level}</td>
             <td>{log.source}</td>
+            <td>{log.thread}</td> 
+            <td>{log.message}</td>
+
           </tr>
         ))}
       </tbody>
@@ -29,9 +30,9 @@ const LogTable = ({ logs }) => {
 };
 
 function getLevelClass(level) {
-  switch(level) {
+  switch (level) {
     case 'ERROR': return 'error';
-    case 'WARN': return 'warn';
+    case 'WARNING': return 'warn';
     case 'INFO': return 'info';
     case 'DEBUG': return 'debug';
     default: return '';

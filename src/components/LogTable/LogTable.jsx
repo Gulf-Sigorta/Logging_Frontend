@@ -1,8 +1,9 @@
 import React from 'react';
+import styles from './LogTable.module.css';
 
 const LogTable = ({ logs }) => {
   return (
-    <table border="1" cellPadding="8" style={{ borderCollapse: 'collapse', width: '100%' }}>
+    <table className={styles.logTable}>
       <thead>
         <tr>
           <th>ID</th>
@@ -14,9 +15,9 @@ const LogTable = ({ logs }) => {
       </thead>
       <tbody>
         {logs.map(log => (
-          <tr key={log.id}>
+          <tr key={log.id} className={styles.row}>
             <td>{log.id}</td>
-            <td style={{ color: getLevelColor(log.level) }}>{log.level}</td>
+            <td className={styles[getLevelClass(log.level)]}>{log.level}</td>
             <td>{log.message}</td>
             <td>{new Date(log.timestamp).toLocaleString()}</td>
             <td>{log.source}</td>
@@ -27,14 +28,13 @@ const LogTable = ({ logs }) => {
   );
 };
 
-// Log seviyesi renkleri için yardımcı fonksiyon
-function getLevelColor(level) {
+function getLevelClass(level) {
   switch(level) {
-    case 'ERROR': return 'red';
-    case 'WARN': return 'orange';
-    case 'INFO': return 'green';
-    case 'DEBUG': return 'gray';
-    default: return 'black';
+    case 'ERROR': return 'error';
+    case 'WARN': return 'warn';
+    case 'INFO': return 'info';
+    case 'DEBUG': return 'debug';
+    default: return '';
   }
 }
 

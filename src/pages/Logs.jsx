@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import LogTable from '../components/LogTable';
+import LogTable from '../components/LogTable/LogTable';
 
 const Logs = () => {
   const [logs, setLogs] = useState([]);

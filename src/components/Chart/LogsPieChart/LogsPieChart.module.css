@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%; /* Bulunduğu alanın tamamını kaplar */
+  height: 100%; /* Üst container'ın yüksekliğine göre ayarlanmalı */
+  max-height: 500px; /* İstersen sınır ver */
+  padding: 20px;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.datepickerWrapper {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.customDatepicker {
+  padding: 5px 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.chartWrapper {
+  flex: 1; /* Boş alanı kapla */
+  position: relative; /* Pie chart için önemli */
+  min-height: 300px; /* Minimum yükseklik */
+}

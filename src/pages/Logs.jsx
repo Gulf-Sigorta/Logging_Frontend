@@ -14,8 +14,7 @@ const Logs = () => {
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [levelCounts, setLevelCounts] = useState({});
-
-  const pageSize = 15;
+  const [pageSize, setPageSize] = useState(15);
 
   useEffect(() => {
     const fetchLogs = async () => {
@@ -49,6 +48,25 @@ const Logs = () => {
     };
     fetchLevelCounts();
   }, []);
+
+  useEffect(() => {
+    const fetchLogs = async () => {
+      try {
+        const baseUrl = selectedLevel
+          ? `http://localhost:8080/api/log/get-log-by-level/${selectedLevel}`
+          : `http://localhost:8080/api/log`;
+
+        const url = `${baseUrl}?page=${page}&size=${pageSize}`;
+        const response = await axios.get(url);
+
+        setLogs(response.data.content);
+        setTotalPages(response.data.totalPages);
+      } catch (err) {
+        console.error("Loglar alınamadı:", err);
+      }
+    };
+    fetchLogs();
+  }, [selectedLevel, page, pageSize]); // ✅ pageSize eklendi
 
   const getExcelFileName = () => {
     const levelPart = selectedLevel ? selectedLevel.toUpperCase() : "ALL";
@@ -96,6 +114,27 @@ const Logs = () => {
             setPage(0);
           }}
         />
+
+        <select
+          value={pageSize}
+          onChange={(e) => {
+            setPageSize(Number(e.target.value));
+            setPage(0); // Sayfa sıfırlansın
+          }}
+          style={{
+            marginLeft: "20px",
+            padding: "8px",
+            borderRadius: "4px",
+            border: "1px solid #ccc",
+            fontWeight: "500",
+          }}
+        >
+          {[15, 30, 50, 75, 100].map((size) => (
+            <option key={size} value={size}>
+              {size} log göster
+            </option>
+          ))}
+        </select>
 
         <div style={{ marginLeft: "auto" }}>
           <button

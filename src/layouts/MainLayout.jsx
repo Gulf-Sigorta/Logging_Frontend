@@ -22,7 +22,6 @@ export default function MainLayout() {
           padding: "10px 30px 0 30px",
           backgroundColor: "#fff",
           transition: "margin-left 0.3s",
-          overflowX: "hidden",
         }}
       >
         <Outlet />

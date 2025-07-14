@@ -1,55 +1,45 @@
+import React from "react";
 import { NavLink } from "react-router-dom";
-import styles from "./Sidebar.module.css";
 
 export default function Sidebar({ isOpen, toggleSidebar }) {
   return (
     <aside
-      className={`${styles.sidebar} ${
-        isOpen ? styles.expanded : styles.collapsed
-      }`}
+      className={`relative bg-blue-50 h-screen shadow-lg transition-[width] duration-300 ${isOpen ? "w-[220px]" : "w-5"
+        }`}
     >
-      {/* Hamburger / Toggle Button */}
       <button
         onClick={toggleSidebar}
-        className={styles.toggleButton}
-        aria-label={isOpen ? "Close sidebar" : "Open sidebar"}
-        title={isOpen ? "Kapat" : "Aç"}
-        style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+        aria-label={isOpen ? "Kapat" : "Aç"}
+        className="absolute top-4 -right-5 w-10 h-10 bg-indigo-500 text-white rounded-full shadow-md flex items-center justify-center hover:bg-indigo-600 transition-colors z-10"
       >
-        &#9776; {/* Hamburger icon */}
+        <span className={`block transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}>
+          &#9776;
+        </span>
       </button>
 
-      {/* Logo ve Menü sadece açıkken göster */}
-      <div className={!isOpen ? styles.collapsedContent : ""}>
-        <nav>
+      <nav className={`mt-16 flex flex-col gap-2 transition-all duration-300 ${isOpen ? "block" : "hidden"
+        }`}>
+        {[
+          { to: "/dashboard", label: "Dashboard", icon: "🏠" },
+          { to: "/logs", label: "Logs", icon: "📜" },
+          { to: "/login", label: "Çıkış", icon: "🚪" },
+        ].map(({ to, label, icon }) => (
           <NavLink
-            to="/dashboard"
+            key={to}
+            to={to}
             className={({ isActive }) =>
-              isActive ? `${styles.navLink} ${styles.active}` : styles.navLink
+              `flex items-center gap-3 px-4 py-3 text-gray-800 rounded-lg transition-colors ${isActive
+                ? "bg-indigo-500 text-white"
+                : "hover:bg-blue-100"
+              }`
             }
-            title="Dashboard"
+            title={label}
           >
-            <span className={styles.icon}>🏠</span>
-            {isOpen && "Dashboard"}
+            <span className="text-lg">{icon}</span>
+            {isOpen && <span className="whitespace-nowrap font-medium">{label}</span>}
           </NavLink>
-
-          <NavLink
-            to="/logs"
-            className={({ isActive }) =>
-              isActive ? `${styles.navLink} ${styles.active}` : styles.navLink
-            }
-            title="Logs"
-          >
-            <span className={styles.icon}>📜</span>
-            {isOpen && "Logs"}
-          </NavLink>
-
-          <NavLink to="/login" className={styles.navLink} title="Çıkış">
-            <span className={styles.icon}>🚪</span>
-            {isOpen && "Çıkış"}
-          </NavLink>
-        </nav>
-      </div>
+        ))}
+      </nav>
     </aside>
   );
 }

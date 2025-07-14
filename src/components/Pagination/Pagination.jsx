@@ -1,11 +1,6 @@
 import React from 'react';
-import styles from './Pagination.module.css';
 
-const Pagination = ({
-  page,
-  totalPages,
-  onPageChange,
-}) => {
+const Pagination = ({ page, totalPages, onPageChange }) => {
   const maxPageNumbersToShow = 10;
   const halfRange = Math.floor(maxPageNumbersToShow / 2);
 
@@ -39,75 +34,88 @@ const Pagination = ({
   };
 
   return (
-    <div className={styles.paginationContainer}>
-      <button
-        className={styles.pageButton}
-        onClick={() => onPageChange(0)}
-        disabled={page === 0}
-      >
-        İlk
-      </button>
-
-      <button
-        className={styles.pageButton}
-        onClick={() => onPageChange(page - 1)}
-        disabled={page === 0}
-      >
-        Önceki
-      </button>
-
-      {showLeftEllipsis && (
-        <>
+    <nav aria-label="Page navigation example" className="flex justify-center mt-4">
+      <ul className="flex items-center -space-x-px h-8 text-sm">
+        <li>
           <button
-            className={styles.pageButton}
-            onClick={handleLeftEllipsisClick}
+            className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700"
+            onClick={() => onPageChange(0)}
+            disabled={page === 0}
           >
-            {Math.max(1, startPage - 10 + 1)}
+            <span className="sr-only">First</span>
+            &laquo;&laquo;
           </button>
-          <span className={styles.ellipsis}>...</span>
-        </>
-      )}
-
-      {pageNumbers.map((num) => (
-        <button
-          key={num}
-          className={`${styles.pageButton} ${
-            num === page ? styles.pageButtonActive : ''
-          }`}
-          onClick={() => onPageChange(num)}
-        >
-          {num + 1}
-        </button>
-      ))}
-
-      {showRightEllipsis && (
-        <>
-          <span className={styles.ellipsis}>...</span>
+        </li>
+        <li>
           <button
-            className={styles.pageButton}
-            onClick={handleRightEllipsisClick}
+            className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+            onClick={() => onPageChange(page - 1)}
+            disabled={page === 0}
           >
-            {Math.min(totalPages, endPage + 10)}
+            <span className="sr-only">Previous</span>
+            &laquo;
           </button>
-        </>
-      )}
+        </li>
 
-      <button
-        className={styles.pageButton}
-        onClick={() => onPageChange(page + 1)}
-        disabled={page + 1 === totalPages || totalPages === 0}
-      >
-        Sonraki
-      </button>
+        {showLeftEllipsis && (
+          <>
+            <button
+              className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+              onClick={handleLeftEllipsisClick}
+            >
+              {Math.max(1, startPage - 10 + 1)}
+            </button>
+            <span className="px-3 h-8 leading-tight text-gray-500">...</span>
+          </>
+        )}
 
-      <button
-        className={styles.pageButton}
-        onClick={() => onPageChange(totalPages - 1)}
-        disabled={page + 1 === totalPages || totalPages === 0}
-      >
-        Son
-      </button>
-    </div>
+        {pageNumbers.map((num) => (
+          <li key={num}>
+            <button
+              className={`flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ${
+                num === page ? 'bg-blue-600 text-blue-600 font-bold' : ''
+              }`}
+              onClick={() => onPageChange(num)}
+            >
+              {num + 1}
+            </button>
+          </li>
+        ))}
+
+        {showRightEllipsis && (
+          <>
+            <span className="px-3 h-8 leading-tight text-gray-500">...</span>
+            <button
+              className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+              onClick={handleRightEllipsisClick}
+            >
+              {Math.min(totalPages, endPage + 10)}
+            </button>
+          </>
+        )}
+
+        <li>
+          <button
+            className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+            onClick={() => onPageChange(page + 1)}
+            disabled={page + 1 === totalPages || totalPages === 0}
+          >
+            <span className="sr-only">Next</span>
+            &raquo;
+          </button>
+        </li>
+        <li>
+          <button
+            className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700"
+            onClick={() => onPageChange(totalPages - 1)}
+            disabled={page + 1 === totalPages || totalPages === 0}
+          >
+            <span className="sr-only">Last</span>
+            &raquo;&raquo;
+          </button>
+        </li>
+      </ul>
+    </nav>
   );
 };
 

@@ -3,29 +3,33 @@ import styles from './LogTable.module.css';
 
 const LogTable = ({ logs }) => {
   return (
-    <table className={styles.logTable}>
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Level</th>
-          <th>Source</th>
-          <th>Thread</th>
-          <th>Message</th> 
-        </tr>
-      </thead>
-      <tbody>
-        {logs.map(log => (
-          <tr key={log.id} className={styles.row}>
-            <td>{new Date(log.timestamp).toLocaleString()}</td>
-            <td className={styles[getLevelClass(log.level)]}>{log.level}</td>
-            <td>{log.source}</td>
-            <td>{log.thread}</td> 
-            <td>{log.message}</td>
-
+    <div className={styles.logTableWrapper}>
+      <div className={styles.logoBg}>
+        <img src="/gigsigortalogo.png" alt="GİG Sigorta Logo" style={{ width: "100%", height: "auto" }} />
+      </div>
+      <table className={styles.logTable}>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Level</th>
+            <th>Source</th>
+            <th>Thread</th>
+            <th>Message</th> 
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {logs.map(log => (
+            <tr key={log.id} className={styles.row}>
+              <td>{new Date(log.timestamp).toLocaleString()}</td>
+              <td className={styles[getLevelClass(log.level)]}>{log.level}</td>
+              <td>{log.source}</td>
+              <td>{log.thread}</td> 
+              <td>{log.message}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

@@ -7,6 +7,12 @@
   border-radius: 8px;
   overflow: hidden;
 }
+.pageWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+}
 
 .logTable thead {
   background-color: #4a90e2;
@@ -46,3 +52,36 @@
   color: #6c757d;
   font-weight: 600;
 }
+
+.logTableWrapper {
+  width: 100%;
+  max-width: 1200px;
+}
+
+
+.logoBg {
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logoBg img {
+  width: 40vw;
+  max-width: 600px;
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+.logTable {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+

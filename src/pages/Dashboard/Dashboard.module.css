@@ -74,3 +74,27 @@
   font-weight: 700;
   color: #555;
 }
+
+
+.contentArea {
+  position: relative;
+  min-height: 100vh;
+  /* ...diğer stiller... */
+  background: 
+    url('/gigsigortalogo.png') no-repeat center center;
+  background-size: 40% auto;
+  opacity: 1;
+}
+
+.contentArea::before {
+  content: "";
+  position: fixed; /* Değişiklik: absolute yerine fixed */
+  inset: 0;
+  background: url('/gigsigortalogo.png') no-repeat center center;
+  background-size: 60% auto; /* Değişiklik: daha büyük logo */
+  opacity: 0.10; /* Saydamlık oranı */
+  pointer-events: none;
+  z-index: 0;
+}
+
+

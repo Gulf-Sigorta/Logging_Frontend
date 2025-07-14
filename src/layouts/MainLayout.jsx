@@ -7,6 +7,9 @@ export default function MainLayout() {
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
+  // Sidebar genişlikleri (px)
+  const sidebarWidth = sidebarOpen ? 220 : 20;
+
   return (
     <div
       style={{
@@ -22,6 +25,7 @@ export default function MainLayout() {
           padding: "10px 30px 0 30px",
           backgroundColor: "#fff",
           transition: "margin-left 0.3s",
+          marginLeft: sidebarWidth,  // BURASI ÖNEMLİ
         }}
       >
         <Outlet />

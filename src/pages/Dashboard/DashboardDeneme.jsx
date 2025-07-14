@@ -8,10 +8,10 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-import styles from "./Dashboard.module.css";
 import LogsPieChart from "../../components/Chart/LogsPieChart/LogsPieChart";
+import logo from "../../assets/gig_logo.jpg";
 
-// Örnek log verileri
+
 const logs = [
   { id: 1, level: "DEBUG", timestamp: "2025-07-11 00:15:00" },
   { id: 2, level: "INFO", timestamp: "2025-07-11 01:20:00" },
@@ -69,12 +69,12 @@ const DashboardDeneme = () => {
     }
   });
   const barData = Array.from({ length: 24 }, (_, i) => {
-  const hour = i.toString().padStart(2, "0");
-  return {
-    hour: `${hour}:00`,
-    ...timeLevelCounts[hour],
-  };
-});
+    const hour = i.toString().padStart(2, "0");
+    return {
+      hour: `${hour}:00`,
+      ...timeLevelCounts[hour],
+    };
+  });
   const levelCounts = logs.reduce((acc, { level }) => {
     acc[level] = (acc[level] || 0) + 1;
     return acc;
@@ -87,125 +87,150 @@ const DashboardDeneme = () => {
     return () => clearInterval(timer);
   }, []);
 
+  // Box shadow renkleri için class
+  const shadowColors = {
+    DEBUG: "shadow-[0_0_8px_2px_#20bf6b]",
+    INFO: "shadow-[0_0_8px_2px_rgba(76,154,255,0.8)]",
+    ERROR: "shadow-[0_0_8px_2px_rgba(255,76,76,0.8)]",
+    WARN: "shadow-[0_0_8px_2px_rgba(255,165,0,0.8)]",
+  };
+  const bgColors = {
+    DEBUG: "bg-green-100",
+    INFO: "bg-blue-100",
+    WARN: "bg-yellow-100",
+    ERROR: "bg-red-100",
+  };
+
+  const textColors = {
+    DEBUG: "text-green-700",
+    INFO: "text-blue-700",
+    WARN: "text-yellow-700",
+    ERROR: "text-red-700",
+  };
+
+
   return (
-    <div className={styles.contentArea}>
-      {/* Yaratıcı üst alan */}
-      <div style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        margin: "40px 130px 30px 130px",
-        gap: 20,
-        flexWrap: "wrap"
-      }}>
-        {/* Hoşgeldin */}
-        <div style={{ flex: 1, minWidth: 180 }}>
-          <h2 style={{ margin: 0, color: "#1a237e" }}>Hoşgeldiniz!</h2>
-          <p style={{ margin: 0, fontWeight: 500 }}>GİG Sigorta Log Dashboard</p>
+    <div
+      className="relative min-h-screen bg-no-repeat bg-center bg-[length:40%_auto] pb-10"
+      style={{ backgroundImage: "url('../../assets/gig_logo.jpg')" }}
+    >
+      <div
+        className="flex justify-between items-center mx-[130px] my-10 gap-5 flex-wrap"
+      >
+        {/* Hoşgeldiniz */}
+        <div className="flex-1 min-w-[180px]">
+          <h2 className="m-0 text-[#1a237e] text-2xl font-semibold">Hoşgeldiniz!</h2>
+          <p className="m-0 font-medium">GİG Sigorta Log Dashboard</p>
         </div>
-        {/* Canlı saat */}
-        <div style={{
-          flex: 1,
-          minWidth: 220,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center"
-        }}>
-          <div style={{
-            fontSize: 48,
-            fontWeight: 700,
-            letterSpacing: 2,
-            color: "#222",
-            background: "rgba(255,255,255,0.7)",
-            borderRadius: 12,
-            padding: "12px 32px",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.08)"
-          }}>
+
+        {/* Canlı Saat */}
+        <div className="flex-1 min-w-[220px] flex flex-col items-center justify-center">
+          <div
+            className="text-5xl font-sans tracking-wider text-gray-900 bg-white bg-opacity-70 rounded-xl py-3 px-8 "
+          >
             {clock.toLocaleTimeString("tr-TR")}
           </div>
-          <span style={{ fontSize: 16, color: "#666", marginTop: 6 }}>
-            {clock.toLocaleDateString("tr-TR", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
+          <span className="text-sm text-gray-600 mt-1.5">
+            {clock.toLocaleDateString("tr-TR", {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
           </span>
         </div>
-        {/* Slogan veya motivasyon */}
-        <div style={{ flex: 1, minWidth: 180, textAlign: "right" }}>
-          <span style={{
-            fontStyle: "italic",
-            color: "#1976d2",
-            fontWeight: 500,
-            fontSize: 24
-          }}>
+
+        {/* Slogan */}
+        <div className="flex-1 min-w-[180px] text-right">
+          {/* Fotoğraf */}
+          <img
+            src={logo} // kendi yoluna göre değiştir
+            alt="Slogan İkonu"
+            className="inline-block mb-2 w-40 "
+          />
+
+          {/* Slogan yazısı */}
+          <span className="italic text-[#1d185e] font-extralight text-xl block">
             "Aklımız Hep Sizde."
           </span>
         </div>
+
+
+
       </div>
 
-      {/* Log kartları ve Pie Chart */}
-      <div className={styles.statsGrid}>
+      {/* Log Kartları */}
+      <div className="flex justify-between mx-[130px] mt-2 gap-5 flex-wrap">
         {levels.map((level) => (
           <div
             key={level}
-            className={`${styles.statCard} ${styles[level.toLowerCase()]}`}
+            className={`flex-1 rounded-xl p-3 text-center shadow-md flex flex-col justify-center min-w-[120px] transition-shadow duration-300 
+              ${shadowColors[level]} ${bgColors[level]}`}
           >
-            <h3>{level}</h3>
-            <p>{levelCounts[level] || 0}</p>
+            <h3 className={`m-0 text-lg ${textColors[level]}`}>{level}</h3>
+            <p className={`m-0 text-2xl  ${textColors[level]}`}>
+              {levelCounts[level] || 0}
+            </p>
           </div>
+
+
         ))}
       </div>
 
-      <div className={styles.chartsContainer}>
-        <div className={styles.chartBox}>
-          <h3>Log Seviyeleri</h3>
-          <LogsPieChart />
+      {/* Grafikler */}
+      <div className="flex justify-around flex-wrap gap-10 mx-[130px] my-10">
+        <div className="bg-gray-50 p-5 flex-1 flex justify-center rounded-xl shadow-md min-w-[300px] max-w-[600px]">
+          <div className="w-full">
+            <h3 className="mb-4 text-xl font-semibold">Log Seviyeleri</h3>
+            <LogsPieChart />
+          </div>
         </div>
       </div>
 
-      {/* Duyuru kutusu */}
-      <div
-        style={{
-          margin: "40px auto 0 auto",
-          maxWidth: 600,
-          background: "rgba(255,255,255,0.85)",
-          borderRadius: 12,
-          padding: 24,
-          boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
-          textAlign: "center",
-        }}
-      >
-        <h2>DUYURU</h2>
-        <p>
-          Sistem bakımı 15 Temmuz 2025 tarihinde 02:00-03:00 saatleri arasında yapılacaktır.<br />
-          Bu süre zarfında dashboard geçici olarak erişilemeyebilir.
-        </p>
-      </div>
 
-      {/* Saat bazlı log seviyesi tablosu en altta */}
-      <div className={styles.chartsContainer} style={{ marginTop: 40 }}>
-        <div className={styles.chartBox}>
-          <h3>Saat Bazlı Log Seviyesi Sayısı</h3>
-          <BarChart
-            width={600}
-            height={300}
-            data={barData}
-            margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="hour" />
-            <YAxis allowDecimals={false} />
-            <Tooltip />
-            <Legend />
-            {levels.map((level) => (
-              <Bar
-                key={level}
-                dataKey={level}
-                stackId="a"
-                fill={COLORS[level]}
-              />
-            ))}
-          </BarChart>
+
+      {/* Saat bazlı log seviyesi grafiği */}
+      <div className="flex justify-around flex-wrap gap-10 mx-[130px] my-10">
+        <div className="bg-gray-50 p-5 flex-1 flex justify-center rounded-xl shadow-md min-w-[300px] max-w-[600px]">
+          <div className="w-full">
+            <h3 className="mb-4 text-xl font-semibold">Saat Bazlı Log Seviyesi Sayısı</h3>
+            <BarChart
+              width={600}
+              height={300}
+              data={barData}
+              margin={{ top: 20, right: 40, left: 0, bottom: 5 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="hour" />
+              <YAxis allowDecimals={false} />
+              <Tooltip />
+              <Legend />
+              {levels.map((level) => (
+                <Bar
+                  key={level}
+                  dataKey={level}
+                  stackId="a"
+                  fill={COLORS[level]}
+                />
+              ))}
+            </BarChart>
+          </div>
         </div>
       </div>
+
+      {/* Arka plan logo için ::before efektini Tailwind ile yapmak zor, bunu CSS içinde bırakmak daha kolay */}
+      <style jsx>{`
+        div.relative::before {
+          content: "";
+          position: fixed;
+          inset: 0;
+          background: url('../../assets/gig_logo.jpg') no-repeat center center;
+          background-size: 60% auto;
+          opacity: 0.1;
+          pointer-events: none;
+          z-index: 0;
+        }
+      `}</style>
     </div>
   );
 };

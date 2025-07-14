@@ -4,8 +4,9 @@ import { NavLink } from "react-router-dom";
 export default function Sidebar({ isOpen, toggleSidebar }) {
   return (
     <aside
-      className={`relative bg-blue-50 h-screen shadow-lg transition-[width] duration-300 ${isOpen ? "w-[220px]" : "w-5"
-        }`}
+     className={`fixed top-0 left-0 h-screen bg-blue-50 shadow-lg z-50 transition-[width] duration-300 ${
+    isOpen ? "w-[220px]" : "w-5"
+  }`}
     >
       <button
         onClick={toggleSidebar}
@@ -17,8 +18,9 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
         </span>
       </button>
 
-      <nav className={`mt-16 flex flex-col gap-2 transition-all duration-300 ${isOpen ? "block" : "hidden"
-        }`}>
+      <nav   className={`mt-16 flex flex-col gap-2 transition-all duration-300 ${
+    isOpen ? "block" : "hidden"
+  }`}>
         {[
           { to: "/dashboard", label: "Dashboard", icon: "🏠" },
           { to: "/logs", label: "Logs", icon: "📜" },

@@ -81,7 +81,7 @@
   min-height: 100vh;
   /* ...diğer stiller... */
   background: 
-    url('/gigsigortalogo.png') no-repeat center center;
+    url('../../assets/gig_logo.jpg') no-repeat center center;
   background-size: 40% auto;
   opacity: 1;
 }
@@ -90,7 +90,7 @@
   content: "";
   position: fixed; /* Değişiklik: absolute yerine fixed */
   inset: 0;
-  background: url('/gigsigortalogo.png') no-repeat center center;
+  background: url('../../assets/gig_logo.jpg') no-repeat center center;
   background-size: 60% auto; /* Değişiklik: daha büyük logo */
   opacity: 0.10; /* Saydamlık oranı */
   pointer-events: none;

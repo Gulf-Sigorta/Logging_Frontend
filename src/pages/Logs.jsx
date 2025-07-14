@@ -3,7 +3,6 @@ import axios from "axios";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import LogTable from "../components/Log/LogTable/LogTable";
-import LogFilter from "../components/Log/LogFilter/LogFilter";
 import Pagination from "../components/Pagination/Pagination";
 import LogLevelSummary from "../components/Log/LogLevelSummary/LogLevelSummary";
 import excelIcon from "../assets/excel.png";

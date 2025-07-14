@@ -11,7 +11,7 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
       <button
         onClick={toggleSidebar}
         aria-label={isOpen ? "Kapat" : "Aç"}
-        className="absolute top-4 -right-5 w-10 h-10 bg-indigo-500 text-white rounded-full shadow-md flex items-center justify-center hover:bg-indigo-600 transition-colors z-10"
+        className="cursor-pointer absolute top-4 -right-5 w-10 h-10 bg-indigo-500 text-white rounded-full shadow-md flex items-center justify-center hover:bg-indigo-600 transition-colors z-10"
       >
         <span className={`block transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}>
           &#9776;

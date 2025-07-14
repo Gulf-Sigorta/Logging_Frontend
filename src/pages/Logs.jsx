@@ -14,6 +14,7 @@ const Logs = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [levelCounts, setLevelCounts] = useState({});
   const [pageSize, setPageSize] = useState(15);
+  
 
   useEffect(() => {
     const fetchLogs = async () => {
@@ -34,19 +35,26 @@ const Logs = () => {
     fetchLogs();
   }, [selectedLevel, page]);
 
-  useEffect(() => {
-    const fetchLevelCounts = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:8080/api/log/level-counts"
-        );
-        setLevelCounts(response.data);
-      } catch (err) {
-        console.error("Log seviyeleri alınamadı:", err);
-      }
-    };
-    fetchLevelCounts();
-  }, []);
+useEffect(() => {
+  const fetchLevelCounts = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8080/api/log/level-counts"
+      );
+
+      const counts = {};
+      response.data.forEach((item) => {
+        counts[item.level] = item.count;
+      });
+
+      setLevelCounts(counts);
+    } catch (err) {
+      console.error("Log seviyeleri alınamadı:", err);
+    }
+  };
+  fetchLevelCounts();
+}, []);
+
 
   useEffect(() => {
     const fetchLogs = async () => {
@@ -132,7 +140,7 @@ const Logs = () => {
 
           <button
             onClick={exportToExcel}
-            className="flex items-center justify-center gap-2 px-5 py-2.5 bg-green-700 hover:bg-green-800 text-white font-semibold rounded shadow-md transition-colors duration-300 cursor-pointer w-full sm:w-auto"
+            className=" flex items-center justify-center gap-2 px-5 py-2.5 bg-green-700 hover:bg-green-800 text-white font-semibold rounded shadow-md transition-colors duration-300 cursor-pointer w-full sm:w-auto"
           >
             <img src={excelIcon} alt="Excel Icon" className="w-5 h-5" />
             Logları indir

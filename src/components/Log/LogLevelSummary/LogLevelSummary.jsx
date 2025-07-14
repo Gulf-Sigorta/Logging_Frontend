@@ -2,13 +2,14 @@ import React from "react";
 
 const LogLevelSummary = ({ levelCounts, selectedLevel, onLevelSelect }) => {
   const levels = ["HEPSİ", "ERROR", "WARNING", "INFO", "DEBUG"];
-  const levelStyleMap = {
-    ERROR: "bg-red-500 text-white",
-    WARNING: "bg-yellow-400 text-white",
-    INFO: "bg-blue-500 text-white",
-    DEBUG: "bg-green-500 text-white",
-    HEPSİ: "bg-gray-500 text-white",
-  };
+const levelStyleMap = {
+  ERROR: "border border-red-500 text-red-700 bg-red-100/30 hover:bg-red-100/60",
+  WARNING: "border border-yellow-500 text-yellow-700 bg-yellow-100/30 hover:bg-yellow-100/60",
+  INFO: "border border-blue-500 text-blue-700 bg-blue-100/30 hover:bg-blue-100/60",
+  DEBUG: "border border-green-500 text-green-700 bg-green-100/30 hover:bg-green-100/60",
+  HEPSİ: "border border-gray-400 text-gray-700 bg-gray-100/30 hover:bg-gray-100/60",
+};
+
 
   return (
     <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4 w-full">

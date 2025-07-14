@@ -38,7 +38,7 @@ const Pagination = ({ page, totalPages, onPageChange }) => {
       <ul className="flex items-center -space-x-px h-8 text-sm">
         <li>
           <button
-            className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700"
+            className="cursor-pointer flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700"
             onClick={() => onPageChange(0)}
             disabled={page === 0}
           >
@@ -48,7 +48,7 @@ const Pagination = ({ page, totalPages, onPageChange }) => {
         </li>
         <li>
           <button
-            className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+            className="cursor-pointer flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
             onClick={() => onPageChange(page - 1)}
             disabled={page === 0}
           >
@@ -60,7 +60,7 @@ const Pagination = ({ page, totalPages, onPageChange }) => {
         {showLeftEllipsis && (
           <>
             <button
-              className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+              className=" cursor-pointer flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
               onClick={handleLeftEllipsisClick}
             >
               {Math.max(1, startPage - 10 + 1)}
@@ -72,7 +72,7 @@ const Pagination = ({ page, totalPages, onPageChange }) => {
         {pageNumbers.map((num) => (
           <li key={num}>
             <button
-              className={`flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ${
+              className={`cursor-pointer flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ${
                 num === page ? 'bg-blue-600 text-blue-600 font-bold' : ''
               }`}
               onClick={() => onPageChange(num)}
@@ -86,7 +86,7 @@ const Pagination = ({ page, totalPages, onPageChange }) => {
           <>
             <span className="px-3 h-8 leading-tight text-gray-500">...</span>
             <button
-              className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+              className="cursor-pointer flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
               onClick={handleRightEllipsisClick}
             >
               {Math.min(totalPages, endPage + 10)}
@@ -96,7 +96,7 @@ const Pagination = ({ page, totalPages, onPageChange }) => {
 
         <li>
           <button
-            className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+            className="cursor-pointer flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
             onClick={() => onPageChange(page + 1)}
             disabled={page + 1 === totalPages || totalPages === 0}
           >
@@ -106,7 +106,7 @@ const Pagination = ({ page, totalPages, onPageChange }) => {
         </li>
         <li>
           <button
-            className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700"
+            className="cursor-pointer flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700"
             onClick={() => onPageChange(totalPages - 1)}
             disabled={page + 1 === totalPages || totalPages === 0}
           >

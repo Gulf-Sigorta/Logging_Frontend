@@ -30,20 +30,22 @@ const LogTable = ({ logs }) => (
   </div>
 );
 
-
 function levelColorClass(level) {
   switch (level) {
     case "ERROR":
-      return "text-red-600 font-semibold";
+      return "text-red-700 font-semibold";
     case "WARNING":
-      return "text-yellow-600 font-semibold";
+      return "text-yellow-700 font-semibold";
     case "INFO":
-      return "text-green-600 font-semibold";
+      return "text-blue-700 font-semibold";
     case "DEBUG":
-      return "text-gray-600 font-semibold";
+      return "text-green-700 font-semibold";
+    case "HEPSİ":
+      return "text-gray-700 font-semibold";
     default:
       return "";
   }
 }
+
 
 export default LogTable;

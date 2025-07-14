@@ -103,9 +103,10 @@ const Logs = () => {
   };
 
   return (
-    <div style={{ padding: "20px 20px" }}>
+    <div className="p-5">
+
       {/* Seçilebilir seviyeler */}
-      <div style={{ display: "flex", alignItems: "center" }}>
+      <div className="flex flex-col items-end gap-4 mb-4 lg:flex-row lg:items-end lg:gap-6">
         <LogLevelSummary
           levelCounts={levelCounts}
           selectedLevel={selectedLevel}
@@ -115,60 +116,34 @@ const Logs = () => {
           }}
         />
 
-        <select
-          value={pageSize}
-          onChange={(e) => {
-            setPageSize(Number(e.target.value));
-            setPage(0); // Sayfa sıfırlansın
-          }}
-          style={{
-            marginLeft: "20px",
-            padding: "8px",
-            borderRadius: "4px",
-            border: "1px solid #ccc",
-            fontWeight: "500",
-          }}
-        >
-          {[15, 30, 50, 75, 100].map((size) => (
-            <option key={size} value={size}>
-              {size} log göster
-            </option>
-          ))}
-        </select>
+          <select
+            value={pageSize}
+            onChange={(e) => {
+              setPageSize(Number(e.target.value));
+              setPage(0); // Sayfa sıfırlansın
+            }}
+            className="px-3 py-2 rounded border border-gray-300 font-medium w-full sm:w-auto"
+          >
+            {[15, 30, 50, 75, 100].map((size) => (
+              <option key={size} value={size}>
+                {size} log göster
+              </option>
+            ))}
+          </select>
 
-        <div style={{ marginLeft: "auto" }}>
           <button
             onClick={exportToExcel}
-            style={{
-              padding: "10px 20px",
-              backgroundColor: "#217346",
-              color: "white",
-              border: "none",
-              borderRadius: 6,
-              cursor: "pointer",
-              fontWeight: "600",
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
-              transition: "background-color 0.3s ease",
-            }}
-            onMouseEnter={(e) => (e.target.style.backgroundColor = "#1b5e2c")}
-            onMouseLeave={(e) => (e.target.style.backgroundColor = "#217346")}
+            className="flex items-center justify-center gap-2 px-5 py-2.5 bg-green-700 hover:bg-green-800 text-white font-semibold rounded shadow-md transition-colors duration-300 cursor-pointer w-full sm:w-auto"
           >
-            <img
-              src={excelIcon}
-              alt="Excel Icon"
-              style={{ width: 20, height: 20 }}
-            />
-            Excel olarak indir
+            <img src={excelIcon} alt="Excel Icon" className="w-5 h-5" />
+            Logları indir
           </button>
-        </div>
       </div>
 
-      <div style={{}}>
+
+
+
         <LogTable logs={logs} />
-      </div>
 
       <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
     </div>

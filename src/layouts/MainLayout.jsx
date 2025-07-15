@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import Sidebar from "../components/Sidebar/Sidebar";
+import Sidebar from "../components/Sidebar";
 
 export default function MainLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -8,13 +8,12 @@ export default function MainLayout() {
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
   // Sidebar genişlikleri (px)
-  const sidebarWidth = sidebarOpen ? 220 : 20;
+  const sidebarWidth = sidebarOpen ? 220 : 50;
 
   return (
     <div
       style={{
         display: "flex",
-        height: "100vh",
         fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
       }}
     >
@@ -25,7 +24,7 @@ export default function MainLayout() {
           padding: "10px 30px 0 30px",
           backgroundColor: "#fff",
           transition: "margin-left 0.3s",
-          marginLeft: sidebarWidth,  // BURASI ÖNEMLİ
+          marginLeft: sidebarWidth, // BURASI ÖNEMLİ
         }}
       >
         <Outlet />

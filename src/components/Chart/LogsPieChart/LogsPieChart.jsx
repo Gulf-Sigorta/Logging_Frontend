@@ -30,7 +30,7 @@ const sampleData = {
   "2025-05": [8, 6, 2, 3],
 };
 
-export default function LogsPieChart() {
+export default function LogsPieChart({ levelCountsFromDate }) {
   const today = new Date();
   const [date, setDate] = useState(
     new Date(today.getFullYear(), today.getMonth(), 1)
@@ -40,7 +40,11 @@ export default function LogsPieChart() {
   const month = date.getMonth() + 1;
 
   const key = `${year}-${month.toString().padStart(2, "0")}`;
-  const dataValues = sampleData[key] || [0, 0, 0, 0];
+
+  // Eğer prop yoksa fallback olarak boş değer kullan
+  const dataValues = (levelCountsFromDate && levelCountsFromDate[key]) || [
+    0, 0, 0, 0,
+  ];
 
   const data = {
     labels: ["DEBUG", "INFO", "WARNING", "ERROR"],

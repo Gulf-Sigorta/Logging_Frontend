@@ -5,7 +5,9 @@ import {
   fetchLevelCounts,
   fetchTodayLevelCounts,
   fetchLevelCountsFromDate,
+  fetchLogsToday,
 } from "../store/logSlice";
+
 import LoadingSpinner from "../components/LoadingSpinner";
 
 import {
@@ -38,6 +40,8 @@ const DashboardDeneme = () => {
   const levelCountsFromDate = useSelector(
     (state) => state.logs.levelCountsFromDate
   );
+  const logsToday = useSelector((state) => state.logs.logsToday);
+
 
   useEffect(() => {
     dispatch(fetchLogs({ page, size: pageSize, level: selectedLevel }));
@@ -51,9 +55,13 @@ const DashboardDeneme = () => {
     dispatch(fetchTodayLevelCounts());
   }, [dispatch]);
 
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
+
   useEffect(() => {
-    dispatch(fetchLevelCountsFromDate());
+    dispatch(fetchLogsToday());
   }, [dispatch]);
+
 
   useEffect(() => {
     const startDate = new Date();
@@ -66,24 +74,25 @@ const DashboardDeneme = () => {
   const levels = ["DEBUG", "INFO", "ERROR", "WARNING"];
 
   // Saat bazlı loglar
-  const timeLevelCounts = {};
+  const timeLevelCountsToday = {};
   for (let i = 0; i < 24; i++) {
     const hour = i.toString().padStart(2, "0");
-    timeLevelCounts[hour] = { DEBUG: 0, INFO: 0, ERROR: 0, WARN: 0 };
+    timeLevelCountsToday[hour] = { DEBUG: 0, INFO: 0, ERROR: 0, WARNING: 0 };
   }
-  logs.forEach(({ level, timestamp }) => {
+  logsToday.forEach(({ level, timestamp }) => {
     const hour = timestamp.slice(11, 13);
-    if (timeLevelCounts[hour]) {
-      timeLevelCounts[hour][level]++;
+    if (timeLevelCountsToday[hour]) {
+      timeLevelCountsToday[hour][level]++;
     }
   });
-  const barData = Array.from({ length: 24 }, (_, i) => {
+  const barDataToday = Array.from({ length: 24 }, (_, i) => {
     const hour = i.toString().padStart(2, "0");
     return {
       hour: `${hour}:00`,
-      ...timeLevelCounts[hour],
+      ...timeLevelCountsToday[hour],
     };
   });
+
 
   // Canlı saat için state
   const [clock, setClock] = useState(new Date());
@@ -97,7 +106,7 @@ const DashboardDeneme = () => {
     DEBUG: "shadow-[0_0_8px_2px_#20bf6b]",
     INFO: "shadow-[0_0_8px_2px_rgba(76,154,255,0.8)]",
     ERROR: "shadow-[0_0_8px_2px_rgba(255,76,76,0.8)]",
-    WARN: "shadow-[0_0_8px_2px_rgba(255,165,0,0.8)]",
+    WARNING: "shadow-[0_0_8px_2px_rgba(255,165,0,0.8)]",
   };
   const bgColors = {
     DEBUG: "bg-green-100",
@@ -181,8 +190,12 @@ const DashboardDeneme = () => {
         <div className="bg-gray-50 p-5 flex-1 flex justify-center rounded-xl shadow-md min-w-[300px] max-w-[600px]">
           <div className="w-full">
             <h3 className="mb-4 text-xl font-semibold">Log Seviyeleri</h3>
-            <LogsPieChart levelCountsFromDate={levelCountsFromDate} />
-          </div>
+            <LogsPieChart
+              levelCountsFromDate={levelCountsFromDate}
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+            />          
+            </div>
         </div>
       </div>
       {/* Saat bazlı log seviyesi grafiği */}
@@ -195,7 +208,7 @@ const DashboardDeneme = () => {
             <BarChart
               width={600}
               height={300}
-              data={barData}
+              data={barDataToday}
               margin={{ top: 20, right: 40, left: 0, bottom: 5 }}
             >
               <CartesianGrid strokeDasharray="3 3" />

@@ -54,9 +54,7 @@ export const fetchLevelCountsFromDate = createAsyncThunk(
   async (startDate, thunkAPI) => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/log/level-counts-from-date?startDate=${encodeURIComponent(
-          startDate
-        )}`,
+        `http://localhost:8080/api/log/level-counts-from-date?startDate=${startDate}`,
         { withCredentials: true }
       );
       return response.data;
@@ -65,6 +63,21 @@ export const fetchLevelCountsFromDate = createAsyncThunk(
     }
   }
 );
+export const fetchLogsToday = createAsyncThunk(
+  "logs/fetchLogsToday",
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8080/api/log/get-logs-today",
+        { withCredentials: true }
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue("Bugünün logları alınamadı");
+    }
+  }
+);
+
 
 const logSlice = createSlice({
   name: "logs",
@@ -73,6 +86,7 @@ const logSlice = createSlice({
     totalPages: 0,
     levelCounts: {},
     levelCountsToday: {},
+    logsToday: [],
     loading: false,
     error: null,
   },
@@ -120,10 +134,23 @@ const logSlice = createSlice({
         action.payload.forEach((item) => {
           counts[item.level] = item.count;
         });
+        state.levelCountsFromDate = action.payload;
+
         state.levelCountsFromDate = counts;
       })
       .addCase(fetchLevelCountsFromDate.rejected, (state, action) => {
         state.error = action.payload;
+      }).addCase(fetchLogsToday.pending, (state) => {
+        state.logsTodayLoading = true;
+        state.logsTodayError = null;
+      })
+      .addCase(fetchLogsToday.fulfilled, (state, action) => {
+        state.logsToday = action.payload;
+        state.logsTodayLoading = false;
+      })
+      .addCase(fetchLogsToday.rejected, (state, action) => {
+        state.logsTodayLoading = false;
+        state.logsTodayError = action.payload;
       });
   },
 });

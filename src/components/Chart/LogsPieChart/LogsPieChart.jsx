@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -10,41 +10,22 @@ import styles from "./LogsPieChart.module.css";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const months = [
-  "Ocak",
-  "Şubat",
-  "Mart",
-  "Nisan",
-  "Mayıs",
-  "Haziran",
-  "Temmuz",
-  "Ağustos",
-  "Eylül",
-  "Ekim",
-  "Kasım",
-  "Aralık",
+  "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
+  "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"
 ];
 
-const sampleData = {
-  "2025-07": [10, 7, 3, 2],
-  "2025-06": [5, 12, 4, 1],
-  "2025-05": [8, 6, 2, 3],
-};
+export default function LogsPieChart({ levelCountsFromDate, selectedDate, setSelectedDate }) {
+  const year = selectedDate.getFullYear();
+  const month = selectedDate.getMonth() + 1;
 
-export default function LogsPieChart({ levelCountsFromDate }) {
-  const today = new Date();
-  const [date, setDate] = useState(
-    new Date(today.getFullYear(), today.getMonth(), 1)
-  );
+  const defaultCounts = { DEBUG: 0, INFO: 0, WARNING: 0, ERROR: 0 };
 
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
+  const countsMap = levelCountsFromDate || defaultCounts;
 
-  const key = `${year}-${month.toString().padStart(2, "0")}`;
+  const dataValues = [countsMap.DEBUG, countsMap.INFO, countsMap.WARNING, countsMap.ERROR];
 
-  // Eğer prop yoksa fallback olarak boş değer kullan
-  const dataValues = (levelCountsFromDate && levelCountsFromDate[key]) || [
-    0, 0, 0, 0,
-  ];
+
+
 
   const data = {
     labels: ["DEBUG", "INFO", "WARNING", "ERROR"],
@@ -60,7 +41,7 @@ export default function LogsPieChart({ levelCountsFromDate }) {
 
   const options = {
     responsive: true,
-    maintainAspectRatio: false, // Burayı ekledik
+    maintainAspectRatio: false,
     plugins: {
       legend: { position: "bottom" },
       tooltip: { enabled: true },
@@ -75,10 +56,8 @@ export default function LogsPieChart({ levelCountsFromDate }) {
 
       <div className={styles.datepickerWrapper}>
         <DatePicker
-          selected={date}
-          onChange={(d) => {
-            setDate(new Date(d.getFullYear(), d.getMonth(), 1));
-          }}
+          selected={selectedDate}
+onChange={(d) => setSelectedDate(new Date(d.getFullYear(), d.getMonth(), 1))}
           dateFormat="MM/yyyy"
           showMonthYearPicker
           maxDate={new Date()}

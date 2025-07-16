@@ -29,7 +29,7 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
       <button
         onClick={toggleSidebar}
         aria-label={isOpen ? "Kapat" : "Aç"}
-        className="cursor-pointer absolute top-4 -right-5 w-9 h-9 bg-indigo-900 text-white rounded-full shadow flex items-center justify-center hover:bg-indigo-600 transition-colors"
+        className="cursor-pointer absolute top-4 -right-5 w-9 h-9 bg-indigo-900 text-white rounded-full shadow flex items-center justify-center hover:bg-orange-900 transition-colors"
       >
         <Menu
           className={`transition-transform duration-300 ${

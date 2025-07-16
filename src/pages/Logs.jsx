@@ -25,9 +25,7 @@ const Logs = () => {
     dispatch(fetchLevelCounts());
   }, [dispatch]);
 
-  if (loading) {
-    return <LoadingSpinner />;
-  }
+
 
   return (
     <div className="p-5 mt-10 relative">
@@ -51,7 +49,8 @@ const Logs = () => {
         logs={logs}
       />
 
-      <LogTable logs={logs} />
+  
+<LogTable logs={logs} isLoading={loading} />
 
       <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
     </div>

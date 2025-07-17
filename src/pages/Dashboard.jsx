@@ -55,8 +55,10 @@ const DashboardDeneme = () => {
     dispatch(fetchTodayLevelCounts());
   }, [dispatch]);
 
-  const [selectedDate, setSelectedDate] = useState(new Date());
-
+const [selectedDate, setSelectedDate] = useState(() => {
+  const now = new Date();
+  return new Date(now.getFullYear(), now.getMonth(), 1);
+});
 
   useEffect(() => {
     dispatch(fetchLogsToday());
@@ -64,12 +66,9 @@ const DashboardDeneme = () => {
 
 
   useEffect(() => {
-    const startDate = new Date();
-    startDate.setDate(startDate.getDate() - 7); // 7 gün önce
-    const isoDate = startDate.toISOString(); // "2025-07-08T14:30:00.000Z"
-
+    const isoDate = selectedDate.toDateString(); 
     dispatch(fetchLevelCountsFromDate(isoDate));
-  }, [dispatch]);
+  }, [selectedDate,dispatch]);
 
   const levels = ["DEBUG", "INFO", "ERROR", "WARNING"];
 

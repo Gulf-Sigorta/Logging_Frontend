@@ -23,7 +23,8 @@ const LogTable = ({ logs, isLoading }) => (
             <tbody className="divide-y divide-gray-200 bg-white">
               {logs.map((log) => (
                 <tr key={log.id} className="hover:bg-gray-100 transition-colors">
-                  <td className="px-3 py-2">{log.timestamp}</td>
+                  <td className="px-3 py-2">  {new Date(log.timestamp).toLocaleString()}
+                  </td>
                   <td className={`px-3 py-2 ${levelColorClass(log.level)}`}>
                     {log.level}
                   </td>

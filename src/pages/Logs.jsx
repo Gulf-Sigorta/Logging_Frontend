@@ -49,8 +49,8 @@ const Logs = () => {
         logs={logs}
       />
 
-  
-<LogTable logs={logs} isLoading={loading} />
+
+      <LogTable logs={logs} isLoading={loading} />
 
       <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
     </div>

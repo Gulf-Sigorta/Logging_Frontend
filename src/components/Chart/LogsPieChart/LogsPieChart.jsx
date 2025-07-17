@@ -56,8 +56,8 @@ export default function LogsPieChart({ levelCountsFromDate, selectedDate, setSel
 
       <div className={styles.datepickerWrapper}>
         <DatePicker
-          selected={selectedDate}
-onChange={(d) => setSelectedDate(new Date(d.getFullYear(), d.getMonth(), 1))}
+          selected={selectedDate} 
+          onChange={(d) => setSelectedDate(new Date(d.getFullYear(), d.getMonth(), 1))}
           dateFormat="MM/yyyy"
           showMonthYearPicker
           maxDate={new Date()}

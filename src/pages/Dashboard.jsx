@@ -32,7 +32,6 @@ const COLORS = {
 const DashboardDeneme = () => {
   const dispatch = useDispatch();
 
-  const { logs, levelCounts } = useSelector((state) => state.logs);
   const [selectedLevel, setSelectedLevel] = useState("");
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(15);
@@ -78,12 +77,15 @@ const [selectedDate, setSelectedDate] = useState(() => {
     const hour = i.toString().padStart(2, "0");
     timeLevelCountsToday[hour] = { DEBUG: 0, INFO: 0, ERROR: 0, WARNING: 0 };
   }
+  
   logsToday.forEach(({ level, timestamp }) => {
-    const hour = timestamp.slice(11, 13);
-    if (timeLevelCountsToday[hour]) {
-      timeLevelCountsToday[hour][level]++;
-    }
-  });
+  const date = new Date(timestamp); // otomatik olarak local time'a çevirir
+  const hour = date.getHours().toString().padStart(2, "0");
+  if (timeLevelCountsToday[hour]) {
+    timeLevelCountsToday[hour][level]++;
+  }
+});
+
   const barDataToday = Array.from({ length: 24 }, (_, i) => {
     const hour = i.toString().padStart(2, "0");
     return {
@@ -197,6 +199,7 @@ const [selectedDate, setSelectedDate] = useState(() => {
             </div>
         </div>
       </div>
+      
       {/* Saat bazlı log seviyesi grafiği */}
       <div className="flex justify-around flex-wrap gap-10 mx my-10">
         <div className="bg-gray-50 p-5 flex-1 flex justify-center rounded-xl shadow-md min-w-[300px] max-w-[760px]">
